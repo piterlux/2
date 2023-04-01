@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">loginAppAs</string>
+    <string name="login">Login</string>
+    <string name="hasło">Hasło</string>
+    <string name="nazwaaplikacji">Aplikacja</string>
+    <string name="rejestracja">Rejestracja</string>
+    <string name="buttonok">OK</string>
+    <string name="rejestracjakonta">Rejestracja konta</string>
+    <string name="podajmail">Podaj email</string>
+    <string name="fildmail">Mail</string>
+    <string name="podajhaslo">Podaj hasło</string>
+    <string name="fildhaslo">Password</string>
+    <string name="buttonzarejestruj">Register</string>
+    <string name="texthello">Hello</string>
+    <string name="powtorzhaslo">Powtórz hasło</string>
+</resources>
