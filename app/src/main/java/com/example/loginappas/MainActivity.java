@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
             if(loginDTO!= null && (!loginDTO.getLogin().equals(login.getText().toString())
             ||!loginDTO.getHaslo().equals(pwd.getText().toString()))){
                 Toast.makeText(this, "Login lub hasło niepoprawne", Toast.LENGTH_SHORT).show();
+            }else {
+                Toast.makeText(this, "Ok", Toast.LENGTH_SHORT).show();
             }
 
 
