@@ -1,5 +1,7 @@
 package com.example.loginappas;
 
+import static com.example.loginappas.utils.Constants.LOGIN;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,7 +12,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.loginappas.dto.LoginDTO;
+
 public class MainActivity extends AppCompatActivity {
+
+   private LoginDTO loginDTO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
         Button okBut = (Button) findViewById(R.id.buttonok);
         TextView regBut = (TextView) findViewById(R.id.textrejestracja);
 
+        EditText pwd = (EditText) findViewById(R.id.editTextTextPassword2);
+        EditText login = (EditText) findViewById(R.id.editTextTextPersonName2);
+
         regBut.setOnClickListener(view -> {
             Intent intentRegestration = new Intent(this,  RegistrationActivity.class);
             startActivity(intentRegestration);
@@ -27,14 +36,23 @@ public class MainActivity extends AppCompatActivity {
         okBut.setOnClickListener(but -> {
             Bundle arguments = getIntent().getExtras();
             if (arguments != null) {
-                String login = arguments.get("login").toString();
+                 loginDTO =(LoginDTO) arguments.get(LOGIN);
+                Toast.makeText(this, loginDTO.getLogin(), Toast.LENGTH_SHORT).show();
+            }
+            if(loginDTO!= null && (!loginDTO.getLogin().equals(login.getText().toString())
+            ||!loginDTO.getHaslo().equals(pwd.getText().toString()))){
+                Toast.makeText(this, "Login lub hasło niepoprawne", Toast.LENGTH_SHORT).show();
+            }
+
+
+                /*String login = arguments.get("login").toString();
                 String password = arguments.get("password").toString();
 
                 EditText editTextlog = (EditText) findViewById(R.id.editTextTextPersonName2);
                 String log = editTextlog.getText().toString();
                 EditText editTextHaslo = (EditText) findViewById(R.id.editTextTextPassword2);
                 String pass = editTextHaslo.getText().toString();
-                if(log.isEmpty()){
+                if(loginDTO.getLogin().isEmpty()){
                     Toast.makeText(this, "Podaj login", Toast.LENGTH_SHORT).show();
 
                 } else if (pass.isEmpty()) {
@@ -48,8 +66,8 @@ public class MainActivity extends AppCompatActivity {
                 }else {
                 Toast.makeText(this, login +"Zalogowałeś się", Toast.LENGTH_SHORT).show();
 
-            }
-        }
+            }*/
+
 
     });
 

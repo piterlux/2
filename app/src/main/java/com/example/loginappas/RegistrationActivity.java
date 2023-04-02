@@ -1,17 +1,26 @@
 package com.example.loginappas;
 
+import static com.example.loginappas.utils.Constants.LOGIN;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.loginappas.dto.LoginDTO;
+import com.example.loginappas.dto.RegistrationDTO;
+
 public class RegistrationActivity extends AppCompatActivity {
+
+   private RegistrationDTO reg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +40,8 @@ public class RegistrationActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 boolean isLoginEmpty= login.getText().toString().isEmpty();
+                reg = new RegistrationDTO(login.getText().toString(),pwd.getText().toString(),
+                        pwd2.getText().toString());
                 if (hasFocus){
                     updateComponent(login,"", Color.WHITE);
                 }else {updateComponent(login,isLoginEmpty?"Podaj login":"",
@@ -43,6 +54,8 @@ public class RegistrationActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 boolean isLoginEmpty= pwd.getText().toString().isEmpty();
+                reg = new RegistrationDTO(login.getText().toString(),pwd.getText().toString(),
+                        pwd2.getText().toString());
                 if (hasFocus){
                     updateComponent(pwd,"", Color.WHITE);
                 }else {updateComponent(pwd,isLoginEmpty?"Podaj hasło":"",
@@ -51,10 +64,14 @@ public class RegistrationActivity extends AppCompatActivity {
                 }
             }});
 
+
+
         pwd2.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 boolean isLoginEmpty= pwd2.getText().toString().isEmpty();
+                reg = new RegistrationDTO(login.getText().toString(),pwd.getText().toString(),
+                        pwd2.getText().toString());
                 String pwdval = pwd.getText().toString();
                 String pwd2val = pwd2.getText().toString();
                 if (hasFocus){
@@ -73,20 +90,38 @@ public class RegistrationActivity extends AppCompatActivity {
                 }
 
             }});
+        TextWatcher textWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                reg = new RegistrationDTO(login.getText().toString(),pwd.getText().toString(),
+                    pwd2.getText().toString());
+
+            }
+        };
+        login.addTextChangedListener(textWatcher);
+        pwd.addTextChangedListener(textWatcher);
+        pwd2.addTextChangedListener(textWatcher);
 
         registrationBut.setOnClickListener(view -> {
-            String loginValue = login.getText().toString();
-            String pwdValue = pwd.getText().toString();
-            String pwd2Value = pwd2.getText().toString();
-            boolean equalsPwd2 = pwd2Value.equals(pwdValue);
 
-            boolean isLoginEmpty = loginValue.isEmpty();
+
+            boolean isLoginEmpty = reg.getLogin().isEmpty();
             updateComponent(login,isLoginEmpty? "Podaj login":"",isLoginEmpty? Color.RED:Color.WHITE);
 
-            boolean isHasloEmpty = pwdValue.isEmpty();
+            boolean isHasloEmpty = reg.getHaslo().isEmpty();
             updateComponent(pwd,isHasloEmpty? "Podaj hasło":"",isHasloEmpty? Color.RED:Color.WHITE);
 
-            boolean isHaslo2Empty = pwd2Value.isEmpty();
+            boolean isHaslo2Empty = reg.getHaslo2().isEmpty();
             updateComponent(pwd2,isHaslo2Empty? "Powtórz hasło":"",isHaslo2Empty? Color.RED:Color.WHITE);
             /*if (loginValue.isEmpty()) {
                 Toast.makeText(this, "Nie podałeś loginu", Toast.LENGTH_SHORT).show();
@@ -99,13 +134,14 @@ public class RegistrationActivity extends AppCompatActivity {
             }else*/
 
 
-            Intent intentRegestration = new Intent(this, MainActivity.class);
-            intentRegestration.putExtra("login", loginValue);
-            intentRegestration.putExtra("password", pwdValue);
-            if(!equalsPwd2){
+
+            if(!reg.isHasloEquals()){
                 pwd2.setText("");
                 updateComponent(pwd2,"Powtórzone hasło nie jest identyczne", Color.RED);
-            }else if(!pwdValue.isEmpty() && !loginValue.isEmpty() && !pwd2Value.isEmpty()) {
+            }else if(reg.hasFieldsFilled()) {
+                LoginDTO loginDTO = new LoginDTO(reg.getLogin(),reg.getHaslo());
+                Intent intentRegestration = new Intent(this, MainActivity.class);
+                intentRegestration.putExtra(LOGIN, loginDTO);
             startActivity(intentRegestration);
             }
 
