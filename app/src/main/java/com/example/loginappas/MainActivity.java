@@ -1,12 +1,10 @@
 package com.example.loginappas;
-
 import static com.example.loginappas.utils.Constants.LOGIN;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -16,18 +14,24 @@ import com.example.loginappas.dto.LoginDTO;
 
 public class MainActivity extends AppCompatActivity {
 
+
    private LoginDTO loginDTO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Button butRegList =  (Button) findViewById(R.id.buttonRegisteredlist);
         Button okBut = (Button) findViewById(R.id.buttonok);
         TextView regBut = (TextView) findViewById(R.id.textrejestracja);
 
         EditText pwd = (EditText) findViewById(R.id.editTextTextPassword2);
         EditText login = (EditText) findViewById(R.id.editTextTextPersonName2);
+
+        butRegList.setOnClickListener(view -> {
+            Intent intentReglist = new Intent(this, MainActivityReg.class);
+            startActivity(intentReglist);
+        });
 
         regBut.setOnClickListener(view -> {
             Intent intentRegestration = new Intent(this,  RegistrationActivity.class);
@@ -45,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
             }else {
                 Toast.makeText(this, "Ok", Toast.LENGTH_SHORT).show();
             }
+
+
 
 
                 /*String login = arguments.get("login").toString();

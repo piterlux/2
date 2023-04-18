@@ -13,4 +13,6 @@
     <string name="buttonzarejestruj">Register</string>
     <string name="texthello">Hello</string>
     <string name="powtorzhaslo">Powtórz hasło</string>
+    <string name="buttonexit">EXIT</string>
+    <string name="registeredlist">Registered list</string>
 </resources>

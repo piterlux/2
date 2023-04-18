@@ -76,7 +76,7 @@
         android:id="@+id/buttonok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:backgroundTint="#149C1A"
         android:text="@string/buttonok"
@@ -87,14 +87,22 @@
         android:id="@+id/textrejestracja"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="8dp"
         android:background="@color/teal_700"
         android:text="@string/rejestracja"
         android:textColor="@color/black"
         android:textSize="24sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/buttonok"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.954"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/buttonRegisteredlist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/registeredlist"
+        app:layout_constraintBaseline_toBaselineOf="@+id/buttonok"
+        app:layout_constraintEnd_toStartOf="@+id/textrejestracja"
         app:layout_constraintStart_toEndOf="@+id/buttonok" />
 </androidx.constraintlayout.widget.ConstraintLayout>

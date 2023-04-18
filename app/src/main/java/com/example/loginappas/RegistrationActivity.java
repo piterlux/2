@@ -17,10 +17,12 @@ import android.widget.Toast;
 
 import com.example.loginappas.dto.LoginDTO;
 import com.example.loginappas.dto.RegistrationDTO;
+import com.example.loginappas.service.RegistationDBService;
 
 public class RegistrationActivity extends AppCompatActivity {
 
    private RegistrationDTO reg;
+   private RegistationDBService registationDBService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,7 @@ public class RegistrationActivity extends AppCompatActivity {
         EditText pwd = (EditText) findViewById(R.id.editTextTextPassword);
         EditText pwd2 = (EditText) findViewById(R.id.editTextTextPassword3);
         Button registrationBut = (Button) findViewById(R.id.buttonregister);
+        Button exitBut = (Button) findViewById(R.id.buttonexit);
 
         login.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -114,6 +117,8 @@ public class RegistrationActivity extends AppCompatActivity {
 
         registrationBut.setOnClickListener(view -> {
 
+           RegistrationDTO reg = new RegistrationDTO(login.getText().toString(),pwd.getText().toString(),
+                    pwd2.getText().toString());
 
             boolean isLoginEmpty = reg.getLogin().isEmpty();
             updateComponent(login,isLoginEmpty? "Podaj login":"",isLoginEmpty? Color.RED:Color.WHITE);
@@ -139,12 +144,31 @@ public class RegistrationActivity extends AppCompatActivity {
                 pwd2.setText("");
                 updateComponent(pwd2,"Powtórzone hasło nie jest identyczne", Color.RED);
             }else if(reg.hasFieldsFilled()) {
-                LoginDTO loginDTO = new LoginDTO(reg.getLogin(),reg.getHaslo());
-                Intent intentRegestration = new Intent(this, MainActivity.class);
-                intentRegestration.putExtra(LOGIN, loginDTO);
-            startActivity(intentRegestration);
+                //LoginDTO loginDTO = new LoginDTO(reg.getLogin(),reg.getHaslo());
+                //Intent intentRegestration = new Intent(this, MainActivity.class);
+                //intentRegestration.putExtra(LOGIN, loginDTO);
+            //startActivity(intentRegestration);
+
+                registationDBService = new RegistationDBService(this);
+
+                Boolean czySieUdalo;
+                        czySieUdalo= registationDBService.addRegistration(reg);
+                if (czySieUdalo){
+                    Toast.makeText(this, "Udało się zapisać", Toast.LENGTH_LONG).show();
+
+
+                }else {
+                    Toast.makeText(this, "Nie udało się", Toast.LENGTH_LONG).show();
+                }
+
+
             }
 
+
+        });
+        exitBut.setOnClickListener(view -> {
+            Intent intentexit = new Intent(this,MainActivity.class);
+            startActivity(intentexit);
         });
     }
 

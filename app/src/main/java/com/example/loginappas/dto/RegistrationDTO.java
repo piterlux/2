@@ -37,23 +37,20 @@ public class RegistrationDTO implements Serializable {
         this.haslo2 = haslo2;
     }
 
-    public  boolean isHasloEquals(){
+    public boolean isHasloEquals() {
 
         return
-                haslo!= null &&!haslo.isEmpty()
-                        && haslo2!=null && !haslo2.isEmpty()
-                            && haslo2.equals(haslo);
+                haslo != null && !haslo.isEmpty()
+                        && haslo2 != null && !haslo2.isEmpty()
+                        && haslo2.equals(haslo);
     }
 
 
-
-
-
-public boolean hasFieldsFilled(){
+    public boolean hasFieldsFilled() {
         return
-                login!= null && !login.isEmpty()
-                         && haslo!= null && ! haslo.isEmpty()
-                                 && haslo2!= null && ! haslo2.isEmpty();
-}
+                login != null && !login.isEmpty()
+                        && haslo != null && !haslo.isEmpty()
+                        && haslo2 != null && !haslo2.isEmpty();
+    }
 
 }
